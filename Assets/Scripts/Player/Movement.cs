@@ -34,9 +34,7 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-     
         _isDrop = false;
-
         _currentSpeedMove = _speedMove;
     }
 
@@ -88,6 +86,7 @@ public class Movement : MonoBehaviour
             if (_accelerationTime >= _maxAccelerationTime)
             {
                 _currentSpeedMove = _speedMove;
+                EndAcceleration?.Invoke();
             }
         }
 

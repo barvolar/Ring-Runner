@@ -6,14 +6,18 @@ using UnityEngine.Events;
 public class Ring : MonoBehaviour
 {
     [SerializeField] private AcelerationCollider _acelerationCollider;
+    [SerializeField] private GroupElement[] _elements;
+    [SerializeField] private Movement _movement;
+    [SerializeField] private Staff _staff;
 
-    private GroupElement[] _elements;
     private int _includetElementsCount;
 
     public event UnityAction Assembled;
 
     private void OnEnable()
     {
+        _movement.EndAcceleration += OnEndAcceleration;
+
         foreach (var item in _elements)
         {
             item.Disabled += OnDisabled;
@@ -22,24 +26,11 @@ public class Ring : MonoBehaviour
 
     private void OnDisable()
     {
+        _movement.EndAcceleration-=OnEndAcceleration;
+
         foreach (var item in _elements)
         {
             item.Disabled -= OnDisabled;
-        }
-    }
-
-    private void Start()
-    {
-        CreateArray();
-    }
-
-    private void CreateArray()
-    {
-        _elements = new GroupElement[transform.childCount];
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            _elements[i] = transform.GetChild(i).GetComponent<GroupElement>();
         }
     }
 
@@ -77,7 +68,34 @@ public class Ring : MonoBehaviour
         if (_includetElementsCount == _elements.Length)
         {
             Assembled?.Invoke();
-           _acelerationCollider.gameObject.SetActive(true);
+            _acelerationCollider.gameObject.SetActive(true);
         }
+    }
+
+    private void OnEndAcceleration()
+    {
+        _acelerationCollider.gameObject.SetActive(false);
+        _elements[0].gameObject.SetActive(false);
+        CheckingCountIncludedElements();
+    }
+
+    public void IncludeElement()
+    {
+        foreach (var element in _elements)
+        {
+            if (element.gameObject.activeSelf == false)
+            {
+                element.gameObject.SetActive(true);
+                CheckingCountIncludedElements();
+                break;
+            }
+        }
+    }
+
+    public void EnableStaff()
+    {
+        _staff.gameObject.SetActive(true);
+        _staff.Create(_includetElementsCount);
+        gameObject.SetActive(false);
     }
 }
