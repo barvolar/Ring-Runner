@@ -11,8 +11,8 @@ public class Movement : MonoBehaviour
    [SerializeField] private Rigidbody _rigidbody;
    
     private float _speedDrag = 300f;
-    private float _speedMove = 20f;
-    private float _maxSpeedMove = 40f;
+    private float _speedMove = 10f;
+    private float _maxSpeedMove = 20f;
     private float _currentSpeedMove;
     private float _accelerationTime = 0;
     private float _maxAccelerationTime = 2f;
@@ -87,6 +87,7 @@ public class Movement : MonoBehaviour
             {
                 _currentSpeedMove = _speedMove;
                 EndAcceleration?.Invoke();
+                _accelerationTime = 0;
             }
         }
 

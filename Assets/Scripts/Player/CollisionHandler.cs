@@ -6,6 +6,7 @@ public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] private Ring _ring;
     [SerializeField] private Movement _movement;
+    [SerializeField] private AnimationHandler _animationHandler;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -13,6 +14,12 @@ public class CollisionHandler : MonoBehaviour
         {
             _ring.IncludeElement();
             element.gameObject.SetActive(false);
+        }
+
+        else if(collision.gameObject.TryGetComponent(out ScoreBox scoreBox))
+        {
+            _movement.enabled = false;
+            _animationHandler.EnableDance();
         }
     }
 
