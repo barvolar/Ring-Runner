@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class AnimationHandler : MonoBehaviour
 {
-    private Animator _animator;
+    private Animator _playerAnimator;
     private string _triggerDanceName = "Dance";
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
+        _playerAnimator = GetComponent<Animator>();
     }
 
     public void EnableDance()
     {
-        _animator.SetTrigger(_triggerDanceName);
+        _playerAnimator.SetTrigger(_triggerDanceName);
     }
 }

@@ -9,7 +9,8 @@ public class Movement : MonoBehaviour
    [SerializeField] protected Rotation _rotation;
    [SerializeField] private Ring _ring;
    [SerializeField] private Rigidbody _rigidbody;
-   
+    [SerializeField] private CameraHandler _cameraHandler;
+
     private float _speedDrag = 300f;
     private float _speedMove = 10f;
     private float _maxSpeedMove = 20f;
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
 
     private Vector3 _slidingDirection;
 
+    public bool IsAcceleration { get; private set; }
     public event UnityAction EndAcceleration;
 
     private void OnEnable()
@@ -34,12 +36,14 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
+        IsAcceleration = false;
         _isDrop = false;
         _currentSpeedMove = _speedMove;
     }
 
     private void Update()
     {
+        Debug.Log(IsAcceleration);
         MoveForward();
 
         if (_isDrop)
@@ -74,6 +78,7 @@ public class Movement : MonoBehaviour
     private void OnAssembled()
     {
         _currentSpeedMove = _maxSpeedMove;
+        IsAcceleration = true;
     }
 
     private void IncreaseSpeed()
@@ -87,6 +92,7 @@ public class Movement : MonoBehaviour
             {
                 _currentSpeedMove = _speedMove;
                 EndAcceleration?.Invoke();
+                IsAcceleration = false;
                 _accelerationTime = 0;
             }
         }

@@ -7,6 +7,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private Ring _ring;
     [SerializeField] private Movement _movement;
     [SerializeField] private AnimationHandler _animationHandler;
+    [SerializeField] private CameraCollisionHandler _cameraCollisionHandler;
+    [SerializeField] private CameraHandler _cameraHandler;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -20,6 +22,7 @@ public class CollisionHandler : MonoBehaviour
         {
             _movement.enabled = false;
             _animationHandler.EnableDance();
+            _cameraHandler.DisableFollow();
         }
     }
 
