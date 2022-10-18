@@ -32,6 +32,8 @@ namespace SplineMesh {
             spline = GetComponent<Spline>(); 
 #if UNITY_EDITOR
             EditorApplication.update += EditorUpdate;
+
+            
 #endif
         }
 

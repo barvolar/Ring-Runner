@@ -30,5 +30,6 @@ public class CollisionHandler : MonoBehaviour
     {
         _movement.EnableDrop();
         _ring.EnableStaff();
+        _animationHandler.EnableSuperRun();
     }
 }

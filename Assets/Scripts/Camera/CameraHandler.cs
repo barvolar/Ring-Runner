@@ -33,8 +33,6 @@ public class CameraHandler : MonoBehaviour
             Follow();
 
         Look();
-        Debug.Log(_position.z);
-
     }
 
     private void Follow()

@@ -6,10 +6,11 @@ using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
-   [SerializeField] protected Rotation _rotation;
-   [SerializeField] private Ring _ring;
-   [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Rotation _rotation;
+    [SerializeField] private Ring _ring;
+    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private CameraHandler _cameraHandler;
+    [SerializeField] private AnimationHandler _animationHandler;
 
     private float _speedDrag = 300f;
     private float _speedMove = 10f;
@@ -30,7 +31,7 @@ public class Movement : MonoBehaviour
     }
 
     private void OnDisable()
-    {        
+    {
         _ring.Assembled -= OnAssembled;
     }
 
@@ -43,7 +44,6 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(IsAcceleration);
         MoveForward();
 
         if (_isDrop)
@@ -79,6 +79,7 @@ public class Movement : MonoBehaviour
     {
         _currentSpeedMove = _maxSpeedMove;
         IsAcceleration = true;
+        _animationHandler.EnableSuperRun();
     }
 
     private void IncreaseSpeed()
@@ -92,11 +93,11 @@ public class Movement : MonoBehaviour
             {
                 _currentSpeedMove = _speedMove;
                 EndAcceleration?.Invoke();
+                _animationHandler.DisableSuperRun();
                 IsAcceleration = false;
                 _accelerationTime = 0;
             }
         }
-
     }
 
     public void EnableDrop()
