@@ -6,10 +6,10 @@ using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
-   [SerializeField] protected Rotation _rotation;
-   [SerializeField] private Ring _ring;
-   [SerializeField] private Rigidbody _rigidbody;
-   
+    [SerializeField] private Ring _ring;
+    [SerializeField] private CameraHandler _cameraHandler;
+    [SerializeField] private AnimationHandler _animationHandler;
+
     private float _speedDrag = 300f;
     private float _speedMove = 10f;
     private float _maxSpeedMove = 20f;
@@ -18,8 +18,11 @@ public class Movement : MonoBehaviour
     private float _maxAccelerationTime = 2f;
     private bool _isDrop;
 
+    private Rotation _rotation;
+    private Rigidbody _rigidbody;
     private Vector3 _slidingDirection;
 
+    public bool IsAcceleration { get; private set; }
     public event UnityAction EndAcceleration;
 
     private void OnEnable()
@@ -27,15 +30,13 @@ public class Movement : MonoBehaviour
         _ring.Assembled += OnAssembled;
     }
 
-    private void OnDisable()
-    {        
-        _ring.Assembled -= OnAssembled;
-    }
-
     private void Start()
     {
+        IsAcceleration = false;
         _isDrop = false;
         _currentSpeedMove = _speedMove;
+        _rigidbody = GetComponent<Rigidbody>();
+        _rotation = GetComponent<Rotation>();
     }
 
     private void Update()
@@ -51,11 +52,14 @@ public class Movement : MonoBehaviour
         IncreaseSpeed();
     }
 
+    private void OnDisable()
+    {
+        _ring.Assembled -= OnAssembled;
+    }
+
     private void MoveForward()
     {
-
         transform.Translate(Vector3.forward * _currentSpeedMove * Time.deltaTime);
-
     }
 
     private void MoveLeftRight()
@@ -74,6 +78,8 @@ public class Movement : MonoBehaviour
     private void OnAssembled()
     {
         _currentSpeedMove = _maxSpeedMove;
+        IsAcceleration = true;
+        _animationHandler.EnableSuperRun();
     }
 
     private void IncreaseSpeed()
@@ -87,10 +93,11 @@ public class Movement : MonoBehaviour
             {
                 _currentSpeedMove = _speedMove;
                 EndAcceleration?.Invoke();
+                _animationHandler.DisableSuperRun();
+                IsAcceleration = false;
                 _accelerationTime = 0;
             }
         }
-
     }
 
     public void EnableDrop()

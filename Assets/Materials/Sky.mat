@@ -19,17 +19,47 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BackTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DownTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FrontTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LeftTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RightTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UpTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Exposure: 1
+    - _AtmosphereThickness: 0.78
+    - _Exposure: 1.13
     - _ImageType: 0
     - _Layout: 0
     - _Mapping: 1
     - _MirrorOnBack: 0
     - _Rotation: 0
+    - _SunDisk: 2
+    - _SunSize: 0.077
+    - _SunSizeConvergence: 3.06
     m_Colors:
+    - _GroundColor: {r: 0.8773585, g: 0.5504183, b: 0.76918983, a: 0.015686275}
+    - _SkyTint: {r: 0.8962264, g: 0.20714669, b: 0.5959484, a: 0}
     - _Tint: {r: 0.7686275, g: 0.5137255, b: 1, a: 0.5}
   m_BuildTextureStacks: []
