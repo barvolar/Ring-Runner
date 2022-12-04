@@ -6,9 +6,7 @@ using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Rotation _rotation;
     [SerializeField] private Ring _ring;
-    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private CameraHandler _cameraHandler;
     [SerializeField] private AnimationHandler _animationHandler;
 
@@ -20,6 +18,8 @@ public class Movement : MonoBehaviour
     private float _maxAccelerationTime = 2f;
     private bool _isDrop;
 
+    private Rotation _rotation;
+    private Rigidbody _rigidbody;
     private Vector3 _slidingDirection;
 
     public bool IsAcceleration { get; private set; }
@@ -30,16 +30,13 @@ public class Movement : MonoBehaviour
         _ring.Assembled += OnAssembled;
     }
 
-    private void OnDisable()
-    {
-        _ring.Assembled -= OnAssembled;
-    }
-
     private void Start()
     {
         IsAcceleration = false;
         _isDrop = false;
         _currentSpeedMove = _speedMove;
+        _rigidbody = GetComponent<Rigidbody>();
+        _rotation = GetComponent<Rotation>();
     }
 
     private void Update()
@@ -55,11 +52,14 @@ public class Movement : MonoBehaviour
         IncreaseSpeed();
     }
 
+    private void OnDisable()
+    {
+        _ring.Assembled -= OnAssembled;
+    }
+
     private void MoveForward()
     {
-
         transform.Translate(Vector3.forward * _currentSpeedMove * Time.deltaTime);
-
     }
 
     private void MoveLeftRight()

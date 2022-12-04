@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,7 +13,7 @@ public class GroupElement : MonoBehaviour
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            _elements[i] = transform.GetChild(i).gameObject;
+            _elements[i] = transform.GetChild(i).gameObject;        
         }
     }
 

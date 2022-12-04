@@ -25,6 +25,5 @@ public class ProgressBar : MonoBehaviour
     private void SetSliderValue(float maxValue, float currentValue)
     {
         _slider.value = currentValue / maxValue;
-        Debug.Log(currentValue / maxValue);
     }
 }

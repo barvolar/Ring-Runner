@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +7,7 @@ public class Ring : MonoBehaviour
     [SerializeField] private GroupElement[] _elements;
     [SerializeField] private Movement _movement;
     [SerializeField] private Staff _staff;
+    [SerializeField] private ParticleSystem _acelerationEffect;
 
     private int _includetElementsCount;
 
@@ -26,7 +25,7 @@ public class Ring : MonoBehaviour
 
     private void OnDisable()
     {
-        _movement.EndAcceleration-=OnEndAcceleration;
+        _movement.EndAcceleration -= OnEndAcceleration;
 
         foreach (var item in _elements)
         {
@@ -50,6 +49,14 @@ public class Ring : MonoBehaviour
         CheckingCountIncludedElements();
     }
 
+    private void OnEndAcceleration()
+    {
+        _acelerationCollider.gameObject.SetActive(false);
+        _acelerationEffect.gameObject.SetActive(false);
+        _elements[0].gameObject.SetActive(false);
+        CheckingCountIncludedElements();
+    }
+
     private void CheckingCountIncludedElements()
     {
         for (int i = 0; i < _elements.Length; i++)
@@ -69,14 +76,8 @@ public class Ring : MonoBehaviour
         {
             Assembled?.Invoke();
             _acelerationCollider.gameObject.SetActive(true);
+            _acelerationEffect.gameObject.SetActive(true);
         }
-    }
-
-    private void OnEndAcceleration()
-    {
-        _acelerationCollider.gameObject.SetActive(false);
-        _elements[0].gameObject.SetActive(false);
-        CheckingCountIncludedElements();
     }
 
     public void IncludeElement()
